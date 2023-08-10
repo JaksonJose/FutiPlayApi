@@ -100,15 +100,16 @@ app.MapControllers();
 using (IServiceScope scope = app.Services.CreateScope())
 {
     RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
     string?[] roles = new[] 
     { 
-        Enum.GetName(typeof(RoleEnum), 0), 
-        Enum.GetName(typeof(RoleEnum), 1), 
-        Enum.GetName(typeof(RoleEnum), 2), 
-        Enum.GetName(typeof(RoleEnum), 3),
-        Enum.GetName(typeof(RoleEnum), 4),
-        Enum.GetName(typeof(RoleEnum), 5),
-        Enum.GetName(typeof(RoleEnum), 6)
+        RoleEnum.SysAdmin.Name,
+        RoleEnum.NormalUser.Name,
+        RoleEnum.TournamentOwner.Name,
+        RoleEnum.TeamOwner.Name,
+        RoleEnum.Coach.Name,
+        RoleEnum.Player.Name,
+        RoleEnum.Referee.Name
     };
 
     foreach (string? role in roles)
