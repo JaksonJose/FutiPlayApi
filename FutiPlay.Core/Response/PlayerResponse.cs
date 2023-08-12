@@ -2,7 +2,7 @@
 
 namespace FutiPlay.Core.Response
 {
-    public class PlayerResponse : BaseInquiryResponse<Player>
+    public class PlayerResponse : BaseInquiryResponse<TeamMember>
     {
     }
 }

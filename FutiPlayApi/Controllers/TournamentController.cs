@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FutiPlay.Api.Controllers
 {
-	[Route("[controller]")]
 	public class TournamentController : BaseController
 	{
 		private readonly ILogger<TournamentController> _logger;

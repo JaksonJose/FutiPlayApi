@@ -1,7 +1,7 @@
 ﻿
 namespace FutiPlay.Core.Models
 {
-    public class Player
+    public class TeamMember
     {
         public int Id { get; set; }
 

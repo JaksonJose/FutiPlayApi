@@ -31,4 +31,8 @@
     <ProjectReference Include="..\FutiPlay.Data\FutiPlay.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
 </Project>

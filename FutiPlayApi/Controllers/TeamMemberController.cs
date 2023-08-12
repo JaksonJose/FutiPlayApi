@@ -6,20 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FutiPlay.Api.Controllers
 {
-    public class PlayerController : BaseController
+    public class TeamMemberController : BaseController
     {
-        private readonly ILogger<PlayerController> _logger;
+        private readonly ILogger<TeamMemberController> _logger;
         private readonly IPlayerBac _playerBac;
-        public PlayerController(IPlayerBac playerBac, ILogger<PlayerController> logger)
+        public TeamMemberController(IPlayerBac playerBac, ILogger<TeamMemberController> logger)
         {
             _logger = logger;
             _playerBac = playerBac;
         }
 
         [HttpGet]
-        public async Task<IActionResult> FetchAllPlayersAsync()
+        public async Task<IActionResult> FetchAllTeamMemberAsync()
         {
-            PlayerResponse response = await _playerBac.FetchAllPlayersAsync();
+            PlayerResponse response = await _playerBac.FetchAllTeamMemberAsync();
             if (response.HasSystemErrorMessages)
                 BadRequest(response);           
 

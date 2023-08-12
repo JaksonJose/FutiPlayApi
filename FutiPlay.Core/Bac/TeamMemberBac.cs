@@ -5,11 +5,11 @@ using FutiPlay.Core.Response;
 
 namespace FutiPlay.Core.Bac
 {
-    public class PlayerBac : IPlayerBac
+    public class TeamMemberBac : IPlayerBac
     {
         private readonly IPlayerRepository _playerRepository;
 
-        public PlayerBac(IPlayerRepository playerRepository)
+        public TeamMemberBac(IPlayerRepository playerRepository)
         {
             _playerRepository = playerRepository;
         }
@@ -19,9 +19,9 @@ namespace FutiPlay.Core.Bac
         /// </summary>
         /// <returns>Response object with players list
         /// and messages</returns>
-        public async Task<PlayerResponse> FetchAllPlayersAsync()
+        public async Task<PlayerResponse> FetchAllTeamMemberAsync()
         {
-            PlayerResponse response = await _playerRepository.FetchAllPlayersAsync();
+            PlayerResponse response = await _playerRepository.FetchAllTeamMemberAsync();
 
             return response;
         }

@@ -8,12 +8,12 @@ using System.Data;
 
 namespace FutiPlay.Data.Repositories
 {
-    public class PlayerRepository : IPlayerRepository
+    public class TeamMemberRepository : IPlayerRepository
     {
         private readonly IDbConnection _dbConnection;
-        private readonly ILogger<PlayerRepository> _logger;
+        private readonly ILogger<TeamMemberRepository> _logger;
 
-        public PlayerRepository(IDbConnection dbConnection, ILogger<PlayerRepository> logger)
+        public TeamMemberRepository(IDbConnection dbConnection, ILogger<TeamMemberRepository> logger)
         {
             _dbConnection = dbConnection;
             _logger = logger;
@@ -24,20 +24,20 @@ namespace FutiPlay.Data.Repositories
         /// </summary>
         /// <returns>Response object with
         /// the players list and messages</returns>
-        public async Task<PlayerResponse> FetchAllPlayersAsync()
+        public async Task<PlayerResponse> FetchAllTeamMemberAsync()
         {
             PlayerResponse response = new();
 
             try
             {
-                IEnumerable<Player> result = await _dbConnection.QueryAsync<Player>("SELECT * FROM Player");
-                List<Player>  playerList = result.ToList();
+                IEnumerable<TeamMember> result = await _dbConnection.QueryAsync<TeamMember>("SELECT * FROM TeamMember");
+                List<TeamMember>  playerList = result.ToList();
 
                 response.ResponseData.AddRange(playerList);                 
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Exception was throw at PlayersRepository.FetchAllPlayersAsync() :: {ex.Message}");
+                _logger.LogError($"Exception was throw at TeamMemberRepository.FetchAllPlayersAsync() :: {ex.Message}");
 
                 response.AddExceptionMessage("500", ex.Message);
             }

@@ -71,8 +71,8 @@ builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<IIdentityBac, IdentityBac>();
 
 // life cycle dependency injection
-builder.Services.AddSingleton<IPlayerBac, PlayerBac>();
-builder.Services.AddSingleton<IPlayerRepository, PlayerRepository>();
+builder.Services.AddSingleton<IPlayerBac, TeamMemberBac>();
+builder.Services.AddSingleton<IPlayerRepository, TeamMemberRepository>();
 
 builder.Services.AddSingleton<ITournamentBac, TournamentBac>();
 builder.Services.AddSingleton<ITournamentRepository, TournamentRepository>();

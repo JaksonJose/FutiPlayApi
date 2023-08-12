@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FutiPlay.Api.Controllers
 {
-    [Route("[controller]")]
     public class AuthController : BaseController
     {
         private readonly IIdentityBac _identityBac;

@@ -10,6 +10,6 @@ namespace FutiPlay.Core.Interfaces.IBac
         /// </summary>
         /// <returns>Response object with players list
         /// and messages</returns>
-        public Task<PlayerResponse> FetchAllPlayersAsync();
+        public Task<PlayerResponse> FetchAllTeamMemberAsync();
     }
 }
