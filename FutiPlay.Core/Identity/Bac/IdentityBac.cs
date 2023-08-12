@@ -25,9 +25,9 @@ namespace FutiPlay.Core.Identity.Bac
         /// </summary>
         /// <param name="userLogin"></param>
         /// <returns>User response data</returns>
-        public async Task<UserResponse> AuthUserBac(UserLogin userLogin)
+        public async Task<UserSimpleResponse> AuthUserBac(UserLogin userLogin)
         {
-            UserResponse response = new();
+            UserSimpleResponse response = new();
 
             bool isPassword = false;
 
@@ -59,7 +59,8 @@ namespace FutiPlay.Core.Identity.Bac
                 return response;
             }
 
-            response.ResponseData.Add(appUser);
+            response.Model = appUser;
+            response.Token = token;
 
             return response;
         }

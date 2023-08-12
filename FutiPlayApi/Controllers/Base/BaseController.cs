@@ -5,7 +5,7 @@ namespace FutiPlay.Api.Controllers.Base
 {
     [ApiController]
     [Authorize]
-    [Route("api")]
+    [Route("api/[controller]")]
     public class BaseController : ControllerBase
     {
     }

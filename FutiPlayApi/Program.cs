@@ -124,6 +124,7 @@ using (IServiceScope scope = app.Services.CreateScope())
 {
     UserManager<ApplicationUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
+    string user = "SuperAdmin";
     string email = "superadmin@admin.com";
     string password = "Test#1234";
 
@@ -131,14 +132,14 @@ using (IServiceScope scope = app.Services.CreateScope())
     {
         ApplicationUser appUser = new()
         {
-            UserName = email,
+            UserName = user,
             Email = email
         };
 
         IdentityResult result = await userManager.CreateAsync(appUser, password);
 
         if (result.Succeeded)
-            await userManager.AddToRoleAsync(appUser, nameof(RoleEnum.SysAdmin));
+            await userManager.AddToRoleAsync(appUser, RoleEnum.SysAdmin.Name);      
     }
 }
 

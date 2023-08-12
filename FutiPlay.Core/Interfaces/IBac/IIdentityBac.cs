@@ -11,6 +11,6 @@ namespace FutiPlay.Core.Interfaces.IBac
         /// </summary>
         /// <param name="userLogin"></param>
         /// <returns>User response data</returns>
-        public Task<UserResponse> AuthUserBac(UserLogin userLogin);
+        public Task<UserSimpleResponse> AuthUserBac(UserLogin userLogin);
     }
 }

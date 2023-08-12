@@ -17,11 +17,11 @@ namespace FutiPlay.Api.Controllers
             _identityBac = identityBac;
         }
 
-        [HttpPost("signin")]
+        [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> SignInAsync([FromBody] UserLogin user)
         {
-            UserResponse response = await _identityBac.AuthUserBac(user);
+            UserSimpleResponse response = await _identityBac.AuthUserBac(user);
             if (response.HasValidationMessages)
             {
                 BadRequest(response.Messages);

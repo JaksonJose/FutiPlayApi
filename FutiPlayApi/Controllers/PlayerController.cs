@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FutiPlay.Api.Controllers
 {
-    [Route("[controller]")]
     public class PlayerController : BaseController
     {
         private readonly ILogger<PlayerController> _logger;
@@ -18,7 +17,6 @@ namespace FutiPlay.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> FetchAllPlayersAsync()
         {
             PlayerResponse response = await _playerBac.FetchAllPlayersAsync();

@@ -12,8 +12,8 @@ namespace xShared.Responses
     /// A simple typed response containing a Model property of the specified type.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SimpleResponse<T> : BaseResponse
+    public class SimpleResponse<T> : BaseResponse where T : class
     {
-        public required T Model { get; set; }
+        public T? Model { get; set; }
     }
 }

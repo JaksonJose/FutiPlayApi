@@ -1,5 +1,4 @@
 ﻿
-using FutiPlay.Core.Identity.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace FutiPlay.Core.Identity.Models
@@ -19,7 +18,5 @@ namespace FutiPlay.Core.Identity.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; } = string.Empty;
-
-        public RoleEnum Roles {  get; set; }
     }
 }
