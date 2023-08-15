@@ -5,11 +5,19 @@ using FutiPlay.Core.Models;
 using FutiPlay.Core.Response;
 using Microsoft.Extensions.Logging;
 using System.Data;
+using static Dapper.SqlBuilder;
 
 namespace FutiPlay.Data.Repositories
 {
-    public class TeamMemberRepository : IPlayerRepository
+    public class TeamMemberRepository : ITeamMemberRepository
     {
+        #region SQL
+
+        private static readonly string SelectTeamMember = "SELECT * FROM TeamMember";
+
+        #endregion
+
+
         private readonly IDbConnection _dbConnection;
         private readonly ILogger<TeamMemberRepository> _logger;
 
@@ -20,17 +28,22 @@ namespace FutiPlay.Data.Repositories
         }
 
         /// <summary>
-        /// Fetch all players
+        /// Fetch the Team Members by request
         /// </summary>
-        /// <returns>Response object with
-        /// the players list and messages</returns>
-        public async Task<PlayerResponse> FetchAllTeamMemberAsync()
+        /// <returns>Team Member response object</returns>
+        public async Task<TeamMemberResponse> FetchTeamMemberByRequestAsync()
         {
-            PlayerResponse response = new();
+            TeamMemberResponse response = new();
+
+            //Build the SQL
+            SqlBuilder builder = new();
+            string querySql = string.Join(' ', SelectTeamMember);
+            Template sqlTemplate = builder.AddTemplate(querySql);
+            string sql = sqlTemplate.RawSql;
 
             try
             {
-                IEnumerable<TeamMember> result = await _dbConnection.QueryAsync<TeamMember>("SELECT * FROM TeamMember");
+                IEnumerable<TeamMember> result = await _dbConnection.QueryAsync<TeamMember>(sql);
                 List<TeamMember>  playerList = result.ToList();
 
                 response.ResponseData.AddRange(playerList);                 

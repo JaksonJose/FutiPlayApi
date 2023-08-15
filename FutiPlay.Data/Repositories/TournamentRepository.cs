@@ -4,36 +4,52 @@ using FutiPlay.Core.Models;
 using FutiPlay.Core.Response;
 using Microsoft.Extensions.Logging;
 using System.Data;
+using static Dapper.SqlBuilder;
 
 namespace FutiPlay.Data.Repositories
 {
 	public class TournamentRepository : ITournamentRepository
 	{
-		public List<Tournament> FetchAllTournamentsAsync()
-		{
-			List<Tournament> tournaments = new List<Tournament>
-			{
-				new Tournament()
-				{
-					Id = 1,
-					Name = "Rankeada",
-					StartDate = "10/02/2024",
-					EndDate = "10/03/2024",
-					Description = " ",
-					Status = "ATIVO",
-				},
-				new Tournament()
-				{
-					Id = 2,
-					Name = "Rankeada 2",
-					StartDate = "10/02/2024",
-					EndDate = "10/03/2024",
-					Description = " ",
-					Status = "CANCELADO",
-				}
-			};
+        private readonly string SelectTournament = "SELECT * FROM Tournament";
 
-			return tournaments;
+        private readonly IDbConnection _dbConnection;
+        private readonly ILogger<TournamentRepository> _logger;
+
+        public TournamentRepository(IDbConnection dbConnection, ILogger<TournamentRepository> logger)
+        {
+            _dbConnection = dbConnection;
+            _logger = logger;
+        }
+
+        /// <summary>
+        /// Fetches the Tournaments by request
+        /// </summary>
+        /// <returns>Tournament response object</returns>
+        public async Task<TournamentResponse> FetchTournamentByRequestAsync()
+		{
+            TournamentResponse response = new();
+
+            //Build the SQL
+            SqlBuilder builder = new();
+            string querySql = string.Join(' ', SelectTournament);
+            Template sqlTemplate = builder.AddTemplate(querySql);
+            string sql = sqlTemplate.RawSql;
+
+            try
+            {
+                IEnumerable<Tournament> result = await _dbConnection.QueryAsync<Tournament>(sql);
+                List<Tournament> playerList = result.ToList();
+
+                response.ResponseData.AddRange(playerList);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Exception was throw at TeamMemberRepository.FetchAllPlayersAsync() :: {ex.Message}");
+
+                response.AddExceptionMessage("500", ex.Message);
+            }
+
+            return response;
 		}
 	}
 }

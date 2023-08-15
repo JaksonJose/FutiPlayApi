@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FutiPlay.Api.Controllers.Base;
-using FutiPlay.Core.Models;
-
 using FutiPlay.Core.Interfaces.IBac;
 using Microsoft.AspNetCore.Authorization;
+using FutiPlay.Core.Response;
 
 namespace FutiPlay.Api.Controllers
 {
@@ -19,9 +18,9 @@ namespace FutiPlay.Api.Controllers
 
 		[HttpGet]
         [AllowAnonymous]
-        public IActionResult FetchAllTournamentsAsync()
+        public async Task<IActionResult> FetchAllTournamentsAsync()
 		{
-			var tournament = _tournamentBac.FetchAllTournamentsAsync();
+			TournamentResponse tournament = await _tournamentBac.FetchTournamentByRequestAsync();
 
 			return Ok(tournament);
 		}

@@ -16,9 +16,9 @@ namespace FutiPlay.Core.Bac
 
 		}
 
-		public List<Tournament> FetchAllTournamentsAsync()
+		public async Task<TournamentResponse> FetchTournamentByRequestAsync()
 		{
-			List<Tournament> tournaments = _tournamentRepository.FetchAllTournamentsAsync();
+			TournamentResponse tournaments = await _tournamentRepository.FetchTournamentByRequestAsync();
 
 			return tournaments;
 

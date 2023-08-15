@@ -9,17 +9,17 @@ namespace FutiPlay.Api.Controllers
     public class TeamMemberController : BaseController
     {
         private readonly ILogger<TeamMemberController> _logger;
-        private readonly IPlayerBac _playerBac;
-        public TeamMemberController(IPlayerBac playerBac, ILogger<TeamMemberController> logger)
+        private readonly ITeamMemberBac _playerBac;
+        public TeamMemberController(ITeamMemberBac playerBac, ILogger<TeamMemberController> logger)
         {
             _logger = logger;
             _playerBac = playerBac;
         }
 
         [HttpGet]
-        public async Task<IActionResult> FetchAllTeamMemberAsync()
+        public async Task<IActionResult> FetchTeamMemberByRequestAsync()
         {
-            PlayerResponse response = await _playerBac.FetchAllTeamMemberAsync();
+            TeamMemberResponse response = await _playerBac.FetchTeamMemberByRequestAsync();
             if (response.HasSystemErrorMessages)
                 BadRequest(response);           
 

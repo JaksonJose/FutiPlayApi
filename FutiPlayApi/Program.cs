@@ -43,11 +43,14 @@ builder.Services.AddAuthentication(auth =>
     };
 });
 
+builder.WebHost.UseUrls("http://192.168.0.77:8000");
+
 
 // Add services to the container.
-builder.Services.AddCors(opt => opt.AddDefaultPolicy(builder => builder.WithOrigins("http://localhost:4200", "http://192.168.0.204:3000").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+builder.Services.AddCors(opt => opt.AddDefaultPolicy(builder => 
+    builder.WithOrigins("http://localhost:19000", "http://192.168.0.77:19000", "https://192.168.0.77:19000", "exp://192.168.0.77:19000").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
-// Inject IDbConnection, with implemantation from SqlConnection class
+// Inject IDbConnection, with implementation from SqlConnection class
 builder.Services.AddTransient<IDbConnection>(config => new SqlConnection(defaultConnectionString));
 
 // Entity and Identity Framework configuration
@@ -71,8 +74,8 @@ builder.Services.AddScoped<UserManager<ApplicationUser>>();
 builder.Services.AddScoped<IIdentityBac, IdentityBac>();
 
 // life cycle dependency injection
-builder.Services.AddSingleton<IPlayerBac, TeamMemberBac>();
-builder.Services.AddSingleton<IPlayerRepository, TeamMemberRepository>();
+builder.Services.AddSingleton<ITeamMemberBac, TeamMemberBac>();
+builder.Services.AddSingleton<ITeamMemberRepository, TeamMemberRepository>();
 
 builder.Services.AddSingleton<ITournamentBac, TournamentBac>();
 builder.Services.AddSingleton<ITournamentRepository, TournamentRepository>();
