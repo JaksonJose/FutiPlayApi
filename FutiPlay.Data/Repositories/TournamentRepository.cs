@@ -24,7 +24,7 @@ namespace FutiPlay.Data.Repositories
         /// <summary>
         /// Fetches the Tournaments by request
         /// </summary>
-        /// <returns>Tournament response object</returns>
+        /// <returns>Response object</returns>
         public async Task<TournamentResponse> FetchTournamentByRequestAsync()
 		{
             TournamentResponse response = new();

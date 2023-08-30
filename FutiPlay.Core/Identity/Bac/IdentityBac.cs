@@ -23,7 +23,7 @@ namespace FutiPlay.Core.Identity.Bac
         /// <summary>
         /// Authenticate user bac
         /// </summary>
-        /// <param name="userLogin"></param>
+        /// <param name="userLogin">Email e password</param>
         /// <returns>User response data</returns>
         public async Task<UserSimpleResponse> AuthUserBac(UserLogin userLogin)
         {
@@ -40,17 +40,33 @@ namespace FutiPlay.Core.Identity.Bac
                 isPassword = await _userManager.CheckPasswordAsync(appUser, userLogin.Password);
             }
 
-            if (!isPassword || appUser == null)
+            if (isPassword && appUser != null)
             {
-                response.AddValidationMessage("", "User or password did not match");
+                response.Model = appUser;
+
+                response = await CreateAndStoreToken(userLogin, response);
 
                 return response;
             }
 
+            response.AddValidationMessage("", "User or password did not match");
+
+            return response;
+        }
+
+        /// <summary>
+        /// Create, Update Token
+        /// </summary>
+        /// <param name="userLogin">Email and password</param>
+        /// <param name="response">Response object</param>
+        /// <returns>User response object</returns>
+        private async Task<UserSimpleResponse> CreateAndStoreToken(UserLogin userLogin, UserSimpleResponse response)
+        {
             string token = userLogin.GenerateToken(_keyJWT);
+            ApplicationUser user = response.Model;
 
             // Store the user token in the database
-            IdentityResult result = await _userManager.SetAuthenticationTokenAsync(appUser, "FutiPlayApi", "JwtToken", token);
+            IdentityResult result = await _userManager.SetAuthenticationTokenAsync(user, "FutiPlayApi", "JwtToken", token);
 
             if (!result.Succeeded)
             {
@@ -59,7 +75,6 @@ namespace FutiPlay.Core.Identity.Bac
                 return response;
             }
 
-            response.Model = appUser;
             response.Token = token;
 
             return response;

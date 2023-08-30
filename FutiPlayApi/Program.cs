@@ -25,7 +25,7 @@ IConfigurationSection jwtSection = configuration.GetSection("JWTSettings");
 builder.Services.Configure<JWTKey>(jwtSection);
 JWTKey? appSettings = jwtSection.Get<JWTKey>();
 
-byte[] criptographedKeyInBytes = Encoding.ASCII.GetBytes(appSettings!.SecretKey);
+byte[] cryptographedKeyInBytes = Encoding.ASCII.GetBytes(appSettings!.SecretKey);
 builder.Services.AddAuthentication(auth =>
 {
     auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -37,13 +37,13 @@ builder.Services.AddAuthentication(auth =>
     auth.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(criptographedKeyInBytes),
+        IssuerSigningKey = new SymmetricSecurityKey(cryptographedKeyInBytes),
         ValidateIssuer = false,
         ValidateAudience = false,
     };
 });
 
-builder.WebHost.UseUrls("http://192.168.0.77:8000");
+// builder.WebHost.UseUrls("http://192.168.0.77:8000");
 
 
 // Add services to the container.
@@ -80,7 +80,7 @@ builder.Services.AddSingleton<ITeamMemberRepository, TeamMemberRepository>();
 builder.Services.AddSingleton<ITournamentBac, TournamentBac>();
 builder.Services.AddSingleton<ITournamentRepository, TournamentRepository>();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

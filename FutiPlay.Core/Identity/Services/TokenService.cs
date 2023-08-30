@@ -18,9 +18,8 @@ namespace FutiPlay.Core.Identity.Services
         public static string GenerateToken(this UserLogin auth, JWTKey jwtKey)
         {
             JwtSecurityTokenHandler tokenHandler = new();
-
-            // Get Criptographed key
-            byte[] criptographedKey = Encoding.ASCII.GetBytes(jwtKey.SecretKey);
+         
+            byte[] cryptographedKey = Encoding.ASCII.GetBytes(jwtKey.SecretKey);
 
             SecurityTokenDescriptor tokenDescriptor = new()
             {
@@ -30,7 +29,7 @@ namespace FutiPlay.Core.Identity.Services
                     //TODO: Implement user roles
                 }),
                 Expires = DateTime.UtcNow.AddHours(6), //token lifetime
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(criptographedKey), SecurityAlgorithms.HmacSha256Signature),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(cryptographedKey), SecurityAlgorithms.HmacSha256Signature),
             };
 
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);

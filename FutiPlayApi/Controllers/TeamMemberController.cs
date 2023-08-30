@@ -1,7 +1,6 @@
 ﻿using FutiPlay.Api.Controllers.Base;
 using FutiPlay.Core.Interfaces.IBac;
 using FutiPlay.Core.Response;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FutiPlay.Api.Controllers

@@ -14,6 +14,6 @@ namespace xShared.Responses
     /// <typeparam name="T"></typeparam>
     public class SimpleResponse<T> : BaseResponse where T : class
     {
-        public T? Model { get; set; }
+        public T Model { get; set; }
     }
 }
