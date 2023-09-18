@@ -43,7 +43,7 @@ builder.Services.AddAuthentication(auth =>
     };
 });
 
-// builder.WebHost.UseUrls("http://192.168.0.77:8000");
+//builder.WebHost.UseUrls("http://192.168.0.220:8000");
 
 
 // Add services to the container.

@@ -5,6 +5,8 @@ namespace FutiPlay.Core.Models
 {
     public class BaseModel
     {
+        public int Id { get; set; }
+
         /// <summary>
         /// Consider global time zone
         /// </summary>

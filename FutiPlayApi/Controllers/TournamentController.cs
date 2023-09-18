@@ -3,6 +3,8 @@ using FutiPlay.Api.Controllers.Base;
 using FutiPlay.Core.Interfaces.IBac;
 using Microsoft.AspNetCore.Authorization;
 using FutiPlay.Core.Response;
+using FutiPlay.Core.Models;
+using xShared.Request;
 
 namespace FutiPlay.Api.Controllers
 {
@@ -18,7 +20,7 @@ namespace FutiPlay.Api.Controllers
 
 		[HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> FetchAllTournamentsAsync()
+        public async Task<IActionResult> FetchAllTournamentsAsync([FromQuery] InquiryRequest request)
 		{
 			TournamentResponse tournament = await _tournamentBac.FetchTournamentByRequestAsync();
 
