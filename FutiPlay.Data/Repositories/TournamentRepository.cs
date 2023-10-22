@@ -5,6 +5,8 @@ using FutiPlay.Core.Response;
 using Microsoft.Extensions.Logging;
 using System.Data;
 using xShared.Extentions;
+using xShared.Request;
+using xShared.Responses;
 using static Dapper.SqlBuilder;
 using static Dapper.SqlMapper;
 using static System.Net.Mime.MediaTypeNames;
@@ -14,6 +16,8 @@ namespace FutiPlay.Data.Repositories
 	public class TournamentRepository : ITournamentRepository
 	{
         private readonly string SelectTournament = "SELECT * FROM Tournament t";
+        private readonly string InsertTournament = "INSERT INTO Tournament (Name, StartDate, EndDate, Description, Status)";
+        private readonly string InsertValues = "VALUES (@Name, @StartDate, @EndDate, @Description, @Status)";
 
         private readonly IDbConnection _dbConnection;
         private readonly ILogger<TournamentRepository> _logger;
@@ -52,5 +56,36 @@ namespace FutiPlay.Data.Repositories
 
             return response;
 		}
+
+        /// <summary>
+        /// Insert Tournament by request
+        /// </summary>
+        /// <param name="request">Request containing the model to be inserted</param>
+        /// <returns>Response of inserted data</returns>
+        public async Task<ModelOperationResponse> InsertTournamentByRequestAsync(ModelOperationRequest<Tournament> request)
+        {
+            ModelOperationResponse response = new();
+
+            try
+            {
+                SqlBuilder builder = new();
+                string querySql = string.Join(' ', InsertTournament, InsertValues);
+
+                int result = await _dbConnection.ExecuteAsync(querySql, request.Model);
+
+                if(result == 0)
+                {
+                    response.AddErrorMessage("Tournament was not added");
+                }
+
+                response.AddInfoMessage("Tournament was successfully added"); 
+            }
+            catch (Exception exception)
+            {
+                response.AddExceptionMessage(exception.Message);
+            }
+
+            return response;
+        }
     }
 }

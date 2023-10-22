@@ -43,6 +43,7 @@ namespace FutiPlay.Core.Identity.Bac
             if (isPassword && appUser != null)
             {
                 response.Model = appUser;
+                userLogin.UserRoles = await _userManager.GetRolesAsync(appUser);
 
                 response = await CreateAndStoreToken(userLogin, response);
 

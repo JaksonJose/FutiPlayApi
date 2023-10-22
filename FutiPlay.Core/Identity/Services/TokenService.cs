@@ -18,7 +18,9 @@ namespace FutiPlay.Core.Identity.Services
         public static string GenerateToken(this UserLogin auth, JWTKey jwtKey)
         {
             JwtSecurityTokenHandler tokenHandler = new();
-         
+
+            // Create the claim of all roles associated to the user.
+            IEnumerable<Claim> roleClaim = auth.UserRoles!.Select(role => new Claim(ClaimTypes.Role, role));         
             byte[] cryptographedKey = Encoding.ASCII.GetBytes(jwtKey.SecretKey);
 
             SecurityTokenDescriptor tokenDescriptor = new()
@@ -26,8 +28,7 @@ namespace FutiPlay.Core.Identity.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Email, auth.Email), // User.Identity.Name
-                    //TODO: Implement user roles
-                }),
+                }.Union(roleClaim)),
                 Expires = DateTime.UtcNow.AddHours(6), //token lifetime
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(cryptographedKey), SecurityAlgorithms.HmacSha256Signature),
             };

@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Authorization;
 using FutiPlay.Core.Response;
 using FutiPlay.Core.Models;
 using xShared.Request;
+using System.ComponentModel.DataAnnotations;
+using FutiPlay.Core.Identity.Enums;
+using System.Security.Claims;
+using xShared.Responses;
 
 namespace FutiPlay.Api.Controllers
 {
@@ -19,12 +23,20 @@ namespace FutiPlay.Api.Controllers
 		}
 
 		[HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> FetchAllTournamentsAsync([FromQuery] InquiryRequest request)
+		[AllowAnonymous]
+        public async Task<IActionResult> FetchAllTournamentsAsync()
 		{
 			TournamentResponse tournament = await _tournamentBac.FetchTournamentByRequestAsync();
 
 			return Ok(tournament);
 		}
-	}
+
+		[HttpPost]
+		[Authorize]
+        public async Task<IActionResult> InsertTournamentAsync([FromBody] Tournament tournament)
+		{
+			ModelOperationResponse response = await _tournamentBac.InsertTournamentByRequestAsync(tournament);
+			return Ok();
+		}
+    }
 }

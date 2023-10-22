@@ -3,6 +3,10 @@ using FutiPlay.Core.Response;
 using FutiPlay.Core.Interfaces.IBac;
 using FutiPlay.Core.Models;
 using System;
+using xShared.Responses;
+using xShared.Request;
+using Microsoft.AspNetCore.Identity;
+using FutiPlay.Core.Identity.Enums;
 
 namespace FutiPlay.Core.Bac
 {
@@ -10,10 +14,9 @@ namespace FutiPlay.Core.Bac
 	{
 		private readonly ITournamentRepository _tournamentRepository;
 
-		public TournamentBac(ITournamentRepository tournamentRepository)
+        public TournamentBac(ITournamentRepository tournamentRepository)
 		{
 			_tournamentRepository = tournamentRepository;
-
 		}
 
         /// <summary>
@@ -27,5 +30,20 @@ namespace FutiPlay.Core.Bac
 			return tournaments;
 
         }
+
+        /// <summary>
+        /// Insert Tournament by request
+        /// </summary>
+        /// <param name="request">Request containing the model to be inserted</param>
+        /// <returns>Response of inserted data</returns>
+        public async Task<ModelOperationResponse> InsertTournamentByRequestAsync(Tournament tournament)
+		{
+			ModelOperationRequest<Tournament> request = new(tournament);
+			request.Model.SetCreateAtDateAndTime();
+
+            ModelOperationResponse response = await _tournamentRepository.InsertTournamentByRequestAsync(request);
+
+			return response;
+		}
 	}
 }

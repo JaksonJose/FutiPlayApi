@@ -23,6 +23,27 @@ namespace FutiPlay.Core.Models
         /// User that registered or modified the row
         /// </summary>
         [JsonIgnore]
-        public string ModifiedBy { get; set; } = string.Empty;
+        public string UpdatedBy { get; set; } = string.Empty;
+
+        /// <summary>
+        /// User that created the register
+        /// </summary>
+        public string CreatedBy { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Set date and time to CreateAt Property
+        /// </summary>
+        public void SetCreateAtDateAndTime()
+        {
+            CreatedAt = DateTimeOffset.Now;
+        }
+
+        /// <summary>
+        /// Set date and time to UpadtedAt property
+        /// </summary>
+        public void SetUpdatedAtDateAndTime()
+        {
+            UpdatedAt = DateTimeOffset.Now;
+        }
     }
 }

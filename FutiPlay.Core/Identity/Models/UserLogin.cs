@@ -1,5 +1,7 @@
 ﻿
+using FutiPlay.Core.Identity.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace FutiPlay.Core.Identity.Models
 {
@@ -18,5 +20,8 @@ namespace FutiPlay.Core.Identity.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; } = string.Empty;
+
+        [JsonIgnore]
+        public IList<string>? UserRoles { get; set; }
     }
 }
