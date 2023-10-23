@@ -2,11 +2,8 @@
 using FutiPlay.Core.Response;
 using FutiPlay.Core.Interfaces.IBac;
 using FutiPlay.Core.Models;
-using System;
 using xShared.Responses;
 using xShared.Request;
-using Microsoft.AspNetCore.Identity;
-using FutiPlay.Core.Identity.Enums;
 
 namespace FutiPlay.Core.Bac
 {
@@ -28,7 +25,6 @@ namespace FutiPlay.Core.Bac
 			TournamentResponse tournaments = await _tournamentRepository.FetchTournamentByRequestAsync();
 
 			return tournaments;
-
         }
 
         /// <summary>

@@ -4,11 +4,8 @@ using FutiPlay.Core.Interfaces.IBac;
 using Microsoft.AspNetCore.Authorization;
 using FutiPlay.Core.Response;
 using FutiPlay.Core.Models;
-using xShared.Request;
-using System.ComponentModel.DataAnnotations;
-using FutiPlay.Core.Identity.Enums;
-using System.Security.Claims;
 using xShared.Responses;
+using FutiPlay.Core.Extension;
 
 namespace FutiPlay.Api.Controllers
 {
@@ -36,7 +33,10 @@ namespace FutiPlay.Api.Controllers
         public async Task<IActionResult> InsertTournamentAsync([FromBody] Tournament tournament)
 		{
 			ModelOperationResponse response = await _tournamentBac.InsertTournamentByRequestAsync(tournament);
-			return Ok();
+			if (response.InError())
+				BadRequest(response);
+
+			return Ok(response);
 		}
     }
 }

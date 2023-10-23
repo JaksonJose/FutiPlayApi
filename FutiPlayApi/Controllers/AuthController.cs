@@ -1,4 +1,5 @@
 ﻿using FutiPlay.Api.Controllers.Base;
+using FutiPlay.Core.Extension;
 using FutiPlay.Core.Identity.Models;
 using FutiPlay.Core.Interfaces.IBac;
 using FutiPlay.Core.Response;
@@ -21,10 +22,8 @@ namespace FutiPlay.Api.Controllers
         public async Task<IActionResult> SignInAsync([FromBody] UserLogin user)
         {
             UserSimpleResponse response = await _identityBac.AuthUserBac(user);
-            if (response.HasValidationMessages)
-            {
-                BadRequest(response.Messages);
-            }
+            if (response.InError())
+                BadRequest(response);
 
             return Ok(response);
         }

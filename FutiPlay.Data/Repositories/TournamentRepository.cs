@@ -80,9 +80,10 @@ namespace FutiPlay.Data.Repositories
 
                 response.AddInfoMessage("Tournament was successfully added"); 
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                response.AddExceptionMessage(exception.Message);
+                _logger.LogError($"Exception was throw at InsertTournamentByRequestAsync.FetchAllPlayersAsync() :: {ex.Message}");
+                response.AddExceptionMessage("500", ex.Message);
             }
 
             return response;
